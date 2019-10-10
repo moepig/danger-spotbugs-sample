@@ -1,0 +1,7 @@
+# maven
+target/
+
+
+# intelliJ
+.idea/
+danger-spotbugs-sample.iml
