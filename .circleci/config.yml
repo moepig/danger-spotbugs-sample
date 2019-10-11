@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: /app
+    working_directory: ~/app
     docker:
       - image: circleci/openjdk:8-jdk-browsers
     steps:
@@ -17,7 +17,7 @@ jobs:
       - store_test_results:
           path: target/surefire-reports
       - persist_to_workspace:
-          root: /app/target/
+          root: ~/app/target
           paths:
             - spotbugsXml.xml
   danger:
@@ -31,7 +31,7 @@ jobs:
           LANGUAGE: ja_JP.UTF-8
     steps:
       - attach_workspace:
-          at: /tmp/workspace
+          at: ~/app/target
       - checkout
       - run:
           name: "install dsb"
