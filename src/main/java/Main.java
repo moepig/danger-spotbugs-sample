@@ -6,5 +6,6 @@ public class Main {
         if (true && variable == 1) {
             System.out.println(variable);
         }
+        System.out.println(variable);
     }
 }
