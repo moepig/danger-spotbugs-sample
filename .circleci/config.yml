@@ -43,6 +43,7 @@ jobs:
       - run:
           name: artifacts
           command: |
+            ls -la ~/app/target
             mkdir -p $CIRCLE_ARTIFACTS
             cp ~/app/target/spotbugsXml.xml $CIRCLE_ARTIFACTS
 
