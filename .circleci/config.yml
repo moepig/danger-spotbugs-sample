@@ -13,6 +13,39 @@ jobs:
           paths:
             - ~/.m2
           key: circleci-demo-java-spring-{{ checksum "pom.xml" }}
-      - run: mvn package
+      - run: mvn verify
       - store_test_results:
           path: target/surefire-reports
+      - persist_to_workspace:
+          root: ~/app/target
+          paths:
+            - spotbugsXml.xml
+  danger:
+    working_directory: ~/app
+    docker:
+      - image: dantoml/danger:latest
+        environment:
+          TZ: "/usr/share/zoneinfo/Asia/Tokyo"
+          LANG: ja_JP.UTF-8
+          LC_ALL: C.UTF-8
+          LANGUAGE: ja_JP.UTF-8
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/app/target
+      - run:
+          name: "install dsb"
+          command: |
+            gem install specific_install
+            gem specific_install -l 'https://github.com/vvisteria/dsb'
+      - run: danger
+
+
+workflows:
+  version: 2
+  build-lint:
+    jobs:
+      - build
+      - danger:
+          requires:
+            - build
