@@ -39,7 +39,7 @@ jobs:
             gem install specific_install
             gem specific_install -l 'https://github.com/vvisteria/dsb'
       - run: danger
-      - run: cp ~/app/target/spotbugsXml.xml $CIRCLE_ARTIFACTS 
+      - run: cp ~/app/target/spotbugsXml.xml /tmp/circleci-artifacts/ 
 
 
 workflows:
