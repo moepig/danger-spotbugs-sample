@@ -41,11 +41,13 @@ jobs:
             gem specific_install -l 'https://github.com/vvisteria/dsb'
       - run: danger
       - run:
-          name: artifacts
+          name: create artifact directory
           command: |
             ls -la ~/app/target
             mkdir -p $CIRCLE_ARTIFACTS
             cp ~/app/target/spotbugsXml.xml $CIRCLE_ARTIFACTS
+      - store_artifacts:
+          path: /tmp/circleci-artifacts
 
 
 workflows:
