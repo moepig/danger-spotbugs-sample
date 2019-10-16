@@ -6,6 +6,10 @@ public class Main {
         if (true && variable == 1) {
             System.out.println(variable);
         }
+
+        if (false) {
+            System.out.println(variable);
+        }
         System.out.println(variable);
     }
 }

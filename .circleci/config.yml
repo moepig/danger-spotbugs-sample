@@ -13,7 +13,7 @@ jobs:
           paths:
             - ~/.m2
           key: circleci-demo-java-spring-{{ checksum "pom.xml" }}
-      - run: mvn verify
+      - run: mvn compile spotbugs:spotbugs
       - store_test_results:
           path: target/surefire-reports
       - persist_to_workspace:
@@ -29,6 +29,7 @@ jobs:
           LANG: ja_JP.UTF-8
           LC_ALL: C.UTF-8
           LANGUAGE: ja_JP.UTF-8
+          CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
     steps:
       - checkout
       - attach_workspace:
@@ -39,6 +40,14 @@ jobs:
             gem install specific_install
             gem specific_install -l 'https://github.com/vvisteria/dsb'
       - run: danger
+      - run:
+          name: create artifact directory
+          command: |
+            ls -la ~/app/target
+            mkdir -p $CIRCLE_ARTIFACTS
+            cp ~/app/target/spotbugsXml.xml $CIRCLE_ARTIFACTS
+      - store_artifacts:
+          path: /tmp/circleci-artifacts
 
 
 workflows:
